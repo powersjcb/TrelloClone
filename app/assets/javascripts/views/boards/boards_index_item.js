@@ -23,7 +23,9 @@ TrelloClone.Views.BoardsIndexItem = Backbone.View.extend({
     if ($(event.target).is("button.destroy")) {
       this.destroy();
     } else {
-      Backbone.history.navigate('#boards/' + this.model.id);
+      Backbone.history.navigate(
+        '#boards/' + this.model.id,
+        {trigger: true});
     }
   },
 
