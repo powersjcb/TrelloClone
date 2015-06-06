@@ -2,14 +2,19 @@ TrelloClone.Views.BoardsIndex = Backbone.CompositeView.extend({
 
   template: JST['boards/index'],
   tagName:   "div",
-  className: "",
+  className: "board col-xs-10 col-xs-offset-1 clearfix",
   events: {
-    'submit' : 'submitForm'
+    'click div.form' : 'handleFormClick'
   },
 
   addBoardView: function(model) {
     var subView = new TrelloClone.Views.BoardsIndexItem({ model: model });
     this.addSubview("ul", subView);
+  },
+
+  addFormView: function(model) {
+    var subView = new TrelloClone.Views.FormView({ model: model });
+    this.addSubview("div.form", subView);
   },
 
   initialize: function() {
@@ -29,33 +34,11 @@ TrelloClone.Views.BoardsIndex = Backbone.CompositeView.extend({
     return this;
   },
 
-  submitForm: function(event) {
-    event.preventDefault();
-
-    this.model = new TrelloClone.Models.Board();
-    var attrs = $(event.target).serializeJSON();
-
-    var success = function () {
-      this.collection.add(this.model);
-      this.$el.find('input').val('');
-    }.bind(this);
-
-    function errors (model, response) {
-      var $errors = $('.errors');
-      response.responseJSON.forEach(function (el) {
-        var $li = $('<li>');
-        $li.text(el);
-      }.bind(this));
-      $('.errors').append($li);
+  handleFormClick: function(event) {
+    if ($(event.currentTarget).find('.board-form').length === 0) {
+      var boardModel = new TrelloClone.Models.Board();
+      this.addFormView(boardModel);
+      this.render();
     }
-
-    this.model.save(attrs, {
-      wait: true,
-      success: success,
-      error: errors.bind(this)
-    });
-  },
-
-
-
+  }
 });

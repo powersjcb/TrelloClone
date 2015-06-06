@@ -1,7 +1,7 @@
-TrelloClone.Views.BoardsIndexItem = Backbone.View.extend({
+TrelloClone.Views.BoardsIndexItem = Backbone.CompositeView.extend({
   template: JST['boards/index_item'],
   tagName:   "li",
-  className: "list-group-item",
+  className: "list list-group-item",
 
   events: {
     'click' : 'handleClick'
@@ -28,8 +28,6 @@ TrelloClone.Views.BoardsIndexItem = Backbone.View.extend({
         {trigger: true});
     }
   },
-
-
 
   destroy: function() {
     this.model.destroy();

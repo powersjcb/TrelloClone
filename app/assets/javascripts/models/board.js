@@ -21,7 +21,7 @@ TrelloClone.Models.Board = Backbone.Model.extend({
 
   parse: function (payload) {
     if (payload.members) {
-    //   this.members().set(payload.members, {parse: true});
+      // this.members().set(payload.members, {parse: true});
       delete payload.members;
     }
 

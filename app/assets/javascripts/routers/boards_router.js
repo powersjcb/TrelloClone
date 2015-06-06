@@ -16,32 +16,28 @@ TrelloClone.Routers.Boards = Backbone.Router.extend({
       collection: this.boardsCollection
     });
     boardsIndexView.collection.fetch();
-    this.$rootEl.html(boardsIndexView.render().$el);
+
+    this._swapView(boardsIndexView);
   },
 
   showBoard: function(id) {
     // TODO: get or fetch this model
     this.boardModel = new TrelloClone.Models.Board({id: id});
-    this.boardModel.fetch();
     this.listCollection = this.boardModel.lists();
-
+    this.boardModel.fetch();
 
     var boardView = new TrelloClone.Views.BoardShow({
       collection: this.listCollection,
       model: this.boardModel
     });
-    this.$rootEl.html(boardView.render().$el);
+
+    this._swapView(boardView);
   },
 
 
   _swapView: function(newView) {
-    
+    this._currentView && this._currentView.remove();
+    this._currentView = newView;
+    this.$rootEl.html(newView.render().$el);
   }
-
-  _swapView: function (newView) {
-  this._currentView && this._currentView.remove();
-  this._currentView = newView;
-  this.$rootEl.html(newView.render().$el);
-}
-
 });
