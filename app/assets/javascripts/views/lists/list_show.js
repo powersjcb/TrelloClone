@@ -10,14 +10,16 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   addHeaderView: function(model) {
-    var subView = new TrelloClone.Views.ListHeader({ model: model });
+    var subView = new TrelloClone.Views.ListHeader({
+       model: model,
+       collection: this.collection });
     this.addSubview('div.list-header', subView);
   },
 
   initialize: function() {
     // runs on events
     this.collection = this.model.cards();
-    this.listenTo(this.collection, "add", this.addCardView);
+    this.listenTo(this.collection, "sync reset", this.addCardView);
     this.listenTo(this.collection, "remove", this.removeCardView);
 
     // runs on init

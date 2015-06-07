@@ -16,16 +16,20 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
   },
 
   events: {
-    "click" : "displayForm",
+    "click" : "handleClicks",
     "submit" : "submitForm"
   },
 
 
-  displayForm: function() {
+  handleClicks: function() {
+    // starts not shown
     if (this._formShow === false) {
       this._formShow = true;
       this.render();
     }
+
+
+
   },
 
   initialize: function() {
@@ -33,14 +37,16 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
   },
 
   render: function() {
-    var content = this.template({ list: this.model });
+    var content = this.template({
+        list: this.model,
+    });
     this.$el.html(content);
-    console.log(this.model);
     return this;
   },
 
   clearForm: function() {
     this._formShow = false;
+    this.collection.add(this.model);
   },
 
   submitForm: function(event) {
