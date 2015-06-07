@@ -8,8 +8,10 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
   template: function(args) {
     if (this._formShow) {
       return JST['lists/form_show'](args);
-    } else {
+    } else if (this.model.id) {
       return JST['lists/header'](args);
+    } else {
+      return JST['lists/form_hide'](args);
     }
   },
 
@@ -23,7 +25,6 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
     if (this._formShow === false) {
       this._formShow = true;
       this.render();
-      console.log('displaying form now');
     }
   },
 
@@ -32,14 +33,13 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
   },
 
   render: function() {
-    console.log(this.model);
     var content = this.template({ list: this.model });
     this.$el.html(content);
+    console.log(this.model);
     return this;
   },
 
   clearForm: function() {
-    console.log('cearing form');
     this._formShow = false;
   },
 

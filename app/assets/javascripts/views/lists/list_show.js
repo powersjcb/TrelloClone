@@ -12,7 +12,6 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
   addHeaderView: function(model) {
     var subView = new TrelloClone.Views.ListHeader({ model: model });
     this.addSubview('div.list-header', subView);
-    console.log(model)
   },
 
   initialize: function() {
