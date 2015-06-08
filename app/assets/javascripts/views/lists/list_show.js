@@ -4,6 +4,10 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
   tagName:   "li",
   className: "list list-group-item",
 
+  events: {
+    "click button.btn-danger": "destroyList"
+  },
+
   addCardView: function(model) {
     var subView = new TrelloClone.Views.CardShow({ model: model });
     this.addSubview("ul", subView);
@@ -12,19 +16,25 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
   addHeaderView: function(model) {
     var subView = new TrelloClone.Views.ListHeader({
        model: model,
-       collection: this.collection });
-    this.addSubview('div.list-header', subView);
+       collection: this.collection,
+       cards: this.cards });
+    this.addSubview('span.list-header', subView);
+  },
+
+  destroyList: function(event){
+    event.preventDefault();
+    this.model.destroy();
   },
 
   initialize: function() {
     // runs on events
-    this.collection = this.model.cards();
-    this.listenTo(this.collection, "sync reset", this.addCardView);
-    this.listenTo(this.collection, "remove", this.removeCardView);
+    this.cards = this.model.cards();
+    this.listenTo(this.cards, "sync reset", this.addCardView);
+    this.listenTo(this.cards, "remove", this.removeCardView);
 
     // runs on init
     this.addHeaderView(this.model);
-    this.collection.each(this.addCardView.bind(this));
+    this.cards.each(this.addCardView.bind(this));
   },
 
   removeCardView: function (model){
@@ -32,13 +42,14 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   removeHeaderView: function(model) {
-    this.removeModelSubview('div.list-header', model);
+    this.removeModelSubview('span.list-header', model);
   },
 
   render: function() {
     var content = this.template({list: this.model});
     this.$el.html(content);
     this.attachSubviews();
+    // $(this.$el).draggable();
     return this;
   }
 });

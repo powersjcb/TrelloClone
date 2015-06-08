@@ -4,21 +4,9 @@ TrelloClone.Views.CardShow = Backbone.CompositeView.extend({
   tagName:   "li",
   className: "card list-group-item",
 
-
-  // addListView: function(model) {
-  //   var subView = new TrelloClone.Views.Item({ model: model });
-  //   this.addSubview("ul", subView);
-  // },
-  //
-  // initialize: function() {
-  //   this.listenTo(this.collection, "add", this.addListView);
-  //   this.listenTo(this.collection, "remove", this.removeListView);
-  //   this.collection.each(this.addListView.bind(this));
-  // },
-  //
-  // removeListView: function (model){
-  //   this.removeModelSubview('ul', model);
-  // },
+  initialize: function() {
+    $(this.$el).attr("data-ord", this.model.escape('ord'));
+  },
 
   render: function() {
     var content = this.template({card: this.model});

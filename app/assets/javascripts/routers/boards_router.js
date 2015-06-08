@@ -25,9 +25,9 @@ TrelloClone.Routers.Boards = Backbone.Router.extend({
     this.boardModel = new TrelloClone.Models.Board({id: id});
     this.listCollection = this.boardModel.lists();
     this.boardModel.fetch();
-    
+
     var boardView = new TrelloClone.Views.BoardShow({
-      collection: this.listCollection,
+      lists: this.listCollection,
       model: this.boardModel
     });
 
