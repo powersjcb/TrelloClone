@@ -5,7 +5,7 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
   className: "board clearfix",
 
   events: {
-    "sort div.lists-container": "handleMove"
+    "sortupdate div.lists-container": "handleMove"
   },
 
   addListView: function(model) {
