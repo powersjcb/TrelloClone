@@ -5,7 +5,7 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
   className: "board clearfix",
 
   events: {
-    "sortupdate div.lists-container": "handleMove"
+    "sortupdate div.lists-container": "event",
   },
 
   addListView: function(model) {
@@ -30,8 +30,8 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
     this.addListForm();
   },
 
-  handleMove: function() {
-    console.log('move complete?');
+  event: function (event, ui) {
+    console.log(ui.item);
   },
 
   initialize: function(options) {
@@ -66,10 +66,6 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
     this.$el.html(content);
     this.attachSubviews();
     this.$el.find('div.lists-container').sortable();
-    this.$el.find('div.cards-container').sortable({
-      connectWith: "div.cards-container",
-      dropOnEmpty: true
-    });
 
     return this;
   }
