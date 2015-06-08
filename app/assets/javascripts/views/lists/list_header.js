@@ -2,7 +2,7 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
 
   _formShow: false,
 
-  tagName: "strong",
+  tagName: "div",
   className: "form-header",
 
   template: function(args) {
@@ -17,7 +17,7 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
 
   events: {
     "click" : "handleClicks",
-    "submit" : "submitForm"
+    "submit" : "submitForm",
   },
 
 
@@ -27,9 +27,6 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
       this._formShow = true;
       this.render();
     }
-
-
-
   },
 
   initialize: function() {
@@ -45,9 +42,8 @@ TrelloClone.Views.ListHeader = Backbone.CompositeView.extend({
   },
 
   clearForm: function() {
-    console.log(this.model);
     this._formShow = false;
-    console.log(this.model);
+    this.collection.add(this.model);
   },
 
   submitForm: function(event) {

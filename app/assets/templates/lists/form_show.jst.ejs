@@ -1,6 +1,5 @@
-<form>
-  <input type="hidden" name="list[board_id]" value="<%= list.escape('board_id') %>">
-  <input type="text" name="list[title]" value="<%= list.escape('title') %>">
+<form class="list-header">
+    <input type="hidden" name="list[board_id]" value="<%= list.escape('board_id') %>">
+    <input type="text" name="list[title]" value="<%= list.escape('title') %>">
   <button type="submit" class="btn btn-success">Save</button>
-  <button type="button" class="btn close"></button>
 </form>
