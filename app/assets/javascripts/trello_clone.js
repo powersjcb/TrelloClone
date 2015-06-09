@@ -3,6 +3,7 @@ window.TrelloClone = {
   Collections: {},
   Views: {},
   Routers: {},
+  Mixins: {},
   initialize: function() {
     window.router = new TrelloClone.Routers.Boards({
       $rootEl: $('div#main')

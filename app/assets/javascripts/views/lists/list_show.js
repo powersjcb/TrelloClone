@@ -28,9 +28,11 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
 
   initialize: function() {
     // runs on events
+    this.$el.attr('data-id', this.model.id);
     this.cards = this.model.cards();
     this.listenTo(this.cards, "sync reset", this.addCardView);
     this.listenTo(this.cards, "remove", this.removeCardView);
+    this.listenTo(this.cards, "sync", this.render);
 
     // runs on init
     this.addHeaderView();
@@ -49,12 +51,31 @@ TrelloClone.Views.ListShow = Backbone.CompositeView.extend({
     var content = this.template({list: this.model});
     this.$el.html(content);
     this.attachSubviews();
+
+    var $el = this.$el;
+
     setTimeout( function() {
-      this.$el.find('div.cards-container').sortable({
+      $el.find('div.cards-container').sortable({
+        update: function () {
+          this.updateOrder($el, this.cards);
+        }.bind(this),
         connectWith: "div.cards-container",
         dropOnEmpty: true
       });
     }.bind(this), 0);
+
     return this;
+  },
+
+  updateOrder: function($list, collection) {
+    var listIds = $list.find('.card-item').map(function(i, el) {
+        return $(el).data('id');
+    });
+
+    for (var i = 0; i < listIds.length; i++) {
+      var model = collection.get(listIds[i]);
+      model.set('ord', i);
+    }
   }
+
 });
